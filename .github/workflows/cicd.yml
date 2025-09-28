@@ -39,21 +39,27 @@ jobs:
         run: |
           docker-compose up -d --build
 
-      - name: Check Docker status
+      - name: Wait for service
         run: |
-          docker-compose ps
-          sleep 30
+          for i in {1..30}; do
+            if curl -s http://localhost:5000/health; then
+              echo "Service is up!"
+              exit 0
+            fi
+            echo "Waiting for service..."
+            sleep 2
+          done
+          echo "Service did not start in time."
+          exit 1
           
-      - name: test
+      - name: Integration test
         run: |
-          curl -f http://localhost:5000/health || exit 1
           echo "Hello World" > test.txt
           curl -X POST -F "file=@test.txt" http://localhost:5000/upload || exit 1
     
       - name: Cleanup
-        run: |
-          docker-compose down
+        run: docker compose down
     
       - name: Log success
-        run: |
-          echo "All tests passed and Docker Compose deployment successful!"
+        run: echo "All tests passed and Docker Compose deployment successful!"
+
