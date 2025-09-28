@@ -26,36 +26,29 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
     
+      - name: Install Docker Compose
+        run: |
+          sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+          sudo chmod +x /usr/local/bin/docker-compose
+          
       - name: Run unit tests
         run: |
           python run_tests.py
-          
-      - name: Set up Docker Compose
-        run: |
-          # Install Docker Compose
-          sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-          sudo chmod +x /usr/local/bin/docker-compose
-          docker-compose --version
         
-      - name: Build and test with Docker Compose
+      - name: Start Docker container
         run: |
-          # Build and start services
           docker-compose up -d --build
-          
-          # Wait for services to start
-          sleep 30
-          
-          # Check container status
+
+      - name: Check Docker status and test
+        run: |
           docker-compose ps
-          
-          # Test health endpoint
-          curl -f http://127.0.0.1:5000/health || exit 1
-          
-          # Test file upload
-          #echo "Hello World" > test.txt
-          #curl -X POST -F "file=@test.txt" http://127.0.0.1:5000/upload || exit 1
-          
-          # Stop and clean up
+          sleep 30
+          curl -f http://localhost:5000/health || exit 1
+          echo "Hello World" > test.txt
+          curl -X POST -F "file=@test.txt" http://localhost:5000/upload || exit 1
+    
+      - name: Cleanup
+        run: |
           docker-compose down
     
       - name: Log success
