@@ -34,8 +34,10 @@ jobs:
       - name: Run tests and deploy
         run: python run_tests.py  # Uses docker-compose without hardcoding
         
-      - name: Show deployment status
-        if: always()
+      - name: Start Docker container
         run: |
-          docker-compose ps
-          echo "All configuration is managed by docker-compose.yml"
+          docker compose up -d
+
+      - name: Check Docker status
+        run: |
+          docker ps
