@@ -1,3 +1,4 @@
+#app.py
 import os
 import logging
 from flask import Flask, request
@@ -30,8 +31,8 @@ class FileProcessorApp(BaseLogging):
             return self.controller.upload_file()
         
         @self.app.route('/records/<record_id>', methods=['GET'])
-        def get_processing_record(record_id):
-            return self.controller.get_processing_record(record_id)
+        def get_processing_record_by_id(record_id):
+            return self.controller.get_processing_record_by_id(record_id)
         
         @self.app.route('/health', methods=['GET'])
         def health_check():

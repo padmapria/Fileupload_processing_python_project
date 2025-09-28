@@ -1,3 +1,4 @@
+# api/service/file_upload_service.py
 import uuid
 from datetime import datetime
 from typing import Dict, Optional
@@ -16,6 +17,12 @@ class FileProcessingService(BaseLogging):
         self.file_records = {}
         self.allowed_extensions = {'txt', 'csv'}
     
+    def get_allowed_extensions(self) -> set:
+        """Get the list of allowed file extensions."""
+        
+        allowed_extensions_list = ", ".join([f".{ext}" for ext in allowed_extensions])
+        return f"Only {allowed_extensions_list} files are permitted." 
+    
     def is_allowed_file(self, filename: str) -> bool:
         """
         Validate if the uploaded file has an allowed extension.
@@ -27,7 +34,7 @@ class FileProcessingService(BaseLogging):
             bool: True if file extension is allowed, False otherwise
         """
         
-        self.log_debug(f"Validating file: {filename}")  
+        self.log_debug(f"Validating file extension: {filename}")  
             
         extension = filename.rsplit('.', 1)[1].lower() if '.' in filename else ''
         is_allowed = extension in self.allowed_extensions
@@ -116,7 +123,7 @@ class FileProcessingService(BaseLogging):
     
     def _save_to_db(self, filename: str, processing_results: Dict[str, int]) -> str:
         """
-        Simulate saving processed data to an in-memory database.
+        Saving processed data to an in-memory database.
         
         Args:
             filename: The original filename

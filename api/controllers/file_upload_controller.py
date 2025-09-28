@@ -1,3 +1,4 @@
+# api/controllers/file_upload_controller.py
 from utils.logger import BaseLogging
 from flask import request, jsonify
 from werkzeug.utils import secure_filename
@@ -36,17 +37,19 @@ class FileUploadController(BaseLogging):
                 self.log_warning("Missing filename")  
                 return jsonify(ApiResponse.error('Filename empty')), 400
                 
-            # Additional safety check for string type
+            # Additional safety check for filenname string type
             if not isinstance(file.filename, str):
                 self.log_warning(f"Filename is not a string: {type(file.filename)}")  
                 return jsonify(ApiResponse.error('Invalid filename format!! Allowed format are ')), 400
             
             # check if file type is valid using service layer
             if not self.file_service.is_allowed_file(file.filename):
-                self.log_warning(f"Invalid file type: {file.filename}")  
-                return jsonify(ApiResponse.error(
-                    'Wrong file type! Only .txt and .csv files are permitted.'
-                )), 400
+                self.log_warning(f"Invalid file type: {file.filename}") 
+                
+                # get the valid file type from service layer
+                error_message  = self.file_service.get_allowed_extensions()
+                
+                return jsonify(ApiResponse.error(error_message)), 400
             
             # Secure the filename
             filename = secure_filename(file.filename)
@@ -70,7 +73,7 @@ class FileUploadController(BaseLogging):
                 'results': result['results']
             }
             
-            self.log_info(f"File upload completed for record: {result['record_id']}")  
+            self.log_info(f"File uploading completed for record: {result['record_id']}")  
             return jsonify(ApiResponse.success(
                 data=response_data, 
                 message='File processed successfully'
@@ -83,7 +86,7 @@ class FileUploadController(BaseLogging):
             self.log_error(f"Unexpected error during file upload: {e}")  
             return jsonify(ApiResponse.error('An internal server error occurred')), 500
     
-    def get_processing_record(self, record_id: str):
+    def get_processing_record_by_id(self, record_id: str):
         """
         Retrieve file processing results corresponding to the record ID.
         
@@ -94,7 +97,7 @@ class FileUploadController(BaseLogging):
             record data or error
         """
         try:
-            record = self.file_service.get_processing_record(record_id)
+            record = self.file_service.get_processing_record_by_id(record_id)
             if not record:
                 self.log_warning(f"Record not found: {record_id}")  
                 return jsonify(ApiResponse.error('Record not found')), 404
