@@ -55,7 +55,7 @@ def deploy_with_docker_compose():
         # Build and start using docker-compose (uses all config from docker-compose.yml)
         logger.info("Building and starting services...")
         result = subprocess.run(
-            ["docker-compose", "up", "--build", "-d"],
+            ["docker-compose", "up", "-d"],
             check=True,
             capture_output=True,
             text=True
