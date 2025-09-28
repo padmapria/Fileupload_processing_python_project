@@ -43,7 +43,7 @@ jobs:
           docker ps
 
           # Wait for services to start
-          sleep 15
+          sleep 60
           
           # Test health endpoint
           curl -f http://localhost:5000/health || exit 1
