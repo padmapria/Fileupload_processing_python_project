@@ -45,9 +45,6 @@ jobs:
           # Wait for services to start
           sleep 15
           
-          # Check container status
-          docker-compose ps
-          
           # Test health endpoint
           curl -f http://localhost:5000/health || exit 1
           
