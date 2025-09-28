@@ -3,14 +3,8 @@
 
 A Flask-based REST API for uploading, processing, and storing  processing results (line count, word count) in memory of text and CSV files. The service counts lines and words in uploaded files and provides a in-memory storage solution for the analysis results.
 
-# Processing results stored in memory
-{
-    'id': 'uuid-record-id',
-    'filename': 'example.txt',
-    'line_count': 15,           # Processing result
-    'word_count': 250,          # Processing result  
-    'timestamp': '2024-01-15T10:30:00'
-}
+### Processing results stored in memory
+<img width="607" height="239" alt="image" src="https://github.com/user-attachments/assets/6fc77799-9cb2-4194-97c9-9ae971d5ace6" />
 
 ## Data Flow
 Upload → User uploads .txt/.csv file
@@ -40,32 +34,7 @@ Retrieve → User can fetch processing results using record ID
 - **Testing**: unittest, pytest
 
 ## 📁 Project Structure
-file_processing_service/
-├── app.py             # Main application entry point
-├── Dockerfile         # Docker configuration
-├── docker-compose.yml # Docker Compose setup
-├── requirements.txt   # Python dependencies
-├── run_tests.py       # Test runner to run both unit & integration tests
-├── utils/
-│ └── logger.py        # Centralized Logging configuration
-├── api/
-│ ├── controllers/
-│ │ └── file_upload_controller.py  # API controllers
-│ └── schemas.py                   # Response schemas
-├── service/
-│ └── file_processing_service.py   # Business logic layer
-└── tests/
-	├── unit/                      # Unit tests
-	    └── test_file_processing_service.py   
-	    └── test_file_upload_controller.py   
-	└── integration/                # Integration tests
-		 └── test_file_processor_app.py   
- 
-#### Detailed Workflow and Steps in the project
-------------------------------------------------
-The entire pipelisne can be executed by installing the dependencies from requirements.txt and running a Python files, with Docker running on the machine.
-   
-app.py - main class.   
+<img width="650" height="500" alt="image" src="https://github.com/user-attachments/assets/1084e8a6-1e7e-4b52-abcb-fdc3da41f4b4" />
 
 
 ### How to run the project in Windows Machine or AWS EC2 that have python 3.11, docker and github installed
@@ -82,12 +51,14 @@ way 1: For manual deployment in local machine
 3. Install python in the pc & Ensure Python is added to PATH during installation
 
 4. Install the required dependencies from requirements.txt and start the application from cmd prompt
-# Upgrade pip first
+
+upgrade pip first </br>
+------------------------
 python -m pip install --upgrade pip
 pip install -r requirements.txt   
 python app.py
 
-Expected output
+expected output </br>
 --------------------
 * Running on all addresses (0.0.0.0)
 * Running on http://127.0.0.1:5000
@@ -112,45 +83,46 @@ docker logs <container_id_or_name>
 
 Test the application via postman
 ---------------------------------
-##Health Check
+## Health Check
 Method: GET
 
-URL: http://localhost:5000/health
-
-Expected Response:
-{
-    "status": "healthy",
-    "service": "file-processing"
-}
+URL: http://localhost:5000/health   <br/>
+ <br/>
+Expected Response: <br/>
+ <br/>
+<img width="600" height="460" alt="image" src="https://github.com/user-attachments/assets/e79e0fd0-4535-45db-97f7-6e3a704c85b9" />
 
 
-##Upload File
+
+
+## Upload File 
 Method: POST
 
-URL: http://localhost:5000/upload
+URL: http://localhost:5000/upload   <br/>
+ <br/>
+Expected Response: <br/>
+Body: form-data   <br/>
+Key: file (type: File)   <br/>
+Value: Select your .txt or .csv file   <br/>
 
-Body: form-data
-Key: file (type: File)
-Value: Select your .txt or .csv file
+<br/>
+<b> Sample postman output </b> 
+<br/>
+<img width="600" height="700" alt="image" src="https://github.com/user-attachments/assets/7886490d-1cca-4b74-97c6-e3482ea771ba" />
 
-Success Response:
-{
-    "status": "success",
-    "data": {
-        "record_id": "a1b2c3d4-e5f6-7890-abcd-ef1234567890",
-        "filename": "test.txt",
-        "results": {
-            "line_count": 5,
-            "word_count": 25
-        }
-    },
-    "message": "File processed successfully"
-}
 
-##Get Processing Record
+
+## Get Processing Record
 Method: GET
-URL: http://localhost:5000/records/{record_id}
-Replace {record_id} with the ID from upload response
+URL: http://localhost:5000/records/{record_id}   <br/>
+<br/>
+Replace {record_id} with the ID from upload response <br/>
+<br/>
+<b> Sample postman output </b>  <br/>
+<br/>
+<img width="612" height="500" alt="image" src="https://github.com/user-attachments/assets/6312e984-a89f-403c-b521-b3fed7de3d76" />
+
+ <br/>
 
 
 After testing stop docker and cleanup the resources
@@ -179,12 +151,15 @@ If tests pass, the application is deployed into a Docker container.
 
 3. Docker Container Execution:   
 Once the docker is up, we can push for deployment
+<img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/61e65e68-9e94-4b08-b544-b1c014e5f710" />
+
 
 ### Things to improve in the project
+-----------------------------------------
 1) To include Iaac like Terraform to deploy in AWS.
 
-Our application has Memory-only storage - suitable for temporary processing needs
-2) Files are NOT stored - only processing results are kept in memory, we can configure db and store in db
-3) Data is ephemeral - all results lost on application restart
-4) No file persistence - original files are processed and discarded
+Our application has Memory-only storage - suitable for temporary processing needs  <br/>
+2) Files are NOT stored - only processing results are kept in memory, we can configure db and store in db    <br/>
+3) Data is ephemeral - all results lost on application restart    <br/>
+4) No file persistence - original files are processed and discarded   <br/>
 
