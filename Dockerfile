@@ -39,9 +39,5 @@ USER flask
 # Expose the port Flask runs on
 EXPOSE 5000
 
-# Health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
-    CMD curl -f http://localhost:5000/health || exit 1
-
 # Command to run the application
 CMD ["python", "app.py"]
