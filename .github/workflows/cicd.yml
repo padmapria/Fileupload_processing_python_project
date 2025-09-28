@@ -41,3 +41,23 @@ jobs:
       - name: Check Docker status
         run: |
           docker ps
+
+          # Wait for services to start
+          sleep 15
+          
+          # Check container status
+          docker-compose ps
+          
+          # Test health endpoint
+          curl -f http://localhost:5000/health || exit 1
+          
+          # Test file upload
+          echo "Hello World" > test.txt
+          curl -X POST -F "file=@test.txt" http://localhost:5000/upload || exit 1
+          
+          # Stop services
+          docker-compose down
+    
+      - name: Log success
+        run: |
+          echo "✅ All tests passed and Docker Compose deployment successful!"
