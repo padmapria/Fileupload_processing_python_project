@@ -1,0 +1,41 @@
+name: File Processor CI/CD
+
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  file-processor:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+        
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.11
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+    
+      - name: Start Docker
+        run: |
+          sudo service docker start
+          sudo docker info
+          
+      - name: Run tests and deploy
+        run: python run_tests.py  # Uses docker-compose without hardcoding
+        
+      - name: Show deployment status
+        if: always()
+        run: |
+          docker-compose ps
+          echo "All configuration is managed by docker-compose.yml"

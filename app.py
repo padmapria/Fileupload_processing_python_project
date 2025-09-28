@@ -19,7 +19,8 @@ class FileProcessorApp(BaseLogging):
         self.app = Flask(__name__)
         
         # Configuration
-        self.app.config['MAX_CONTENT_LENGTH'] = 16 * 1024 * 1024
+        # API-level size limit (1MB)
+        self.app.config['MAX_CONTENT_LENGTH'] = 1 * 1024 * 1024
         self.app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-secret-key')
         
         # Initialize controller
@@ -40,10 +41,11 @@ class FileProcessorApp(BaseLogging):
             return {'status': 'healthy', 'service': 'file-processing'}
         
         # Error handlers
+        # Global error handler for oversized files
         @self.app.errorhandler(413)
         def too_large(e):
             self.log_warning("File too large")  
-            return {'error': 'File is too large. Maximum size is 16MB.'}, 413
+            return {'error': 'File is too large. Maximum size is 1MB.'}, 413
         
         @self.app.errorhandler(404)
         def not_found(e):
