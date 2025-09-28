@@ -11,7 +11,7 @@ class BaseLogging:
     def __init__(self):
         class_name = self.__class__.__name__
         
-        # Use a consistent logger name (root or module-based)
+        # Usinh a consistent logger name 
         self.logger = logging.getLogger("file_processor")  # Consistent name
         
         # Configure logging only once
