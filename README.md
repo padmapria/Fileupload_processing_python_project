@@ -63,16 +63,23 @@ expected output </br>
 * Running on all addresses (0.0.0.0)
 * Running on http://127.0.0.1:5000
 * Running on http://[your-ip]:5000
-	
-	
-way 2: For manual deployment in docker desktop
-----------------------
-5. Launch docker.Ensure Docker Desktop is running if you're on Windows.  
 
-6. Run Docker Container:   
+Test the application </br>
+--------------------
+5. Run the test_api.bat in the project folder, to test directly
+   
+6. Alternatively Test the application via postman as given in the below steps
+
+
+	
+way 3: For manual deployment in docker desktop
+----------------------
+1. Launch docker.Ensure Docker Desktop is running if you're on Windows.  
+
+2. Run Docker Container:   
 docker-compose up -d
 
-7. To view logs of the docker container. Run the following command     
+3. To view logs of the docker container. Run the following command     
 Find the Container ID or Name  by running the following command from command prompt:  
 docker ps
 
