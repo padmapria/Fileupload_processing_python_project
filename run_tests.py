@@ -61,22 +61,22 @@ def deploy_with_docker_compose():
             text=True
         )
         
-        logger.info("✅ Docker-compose deployment successful")
+        logger.info("Docker-compose deployment successful")
         
         # Wait for health check (defined in docker-compose.yml) to pass
         logger.info("Waiting for service to be healthy...")
         if wait_for_health():
-            logger.info("✅ Service is healthy and ready!")
+            logger.info("Service is healthy and ready!")
             return True
         else:
-            logger.warning("⚠️  Service started but health check timeout")
+            logger.warning("Service started but health check timeout")
             return True  # Still return True as container is running
             
     except subprocess.CalledProcessError as e:
-        logger.error(f"❌ Docker-compose failed: {e.stderr}")
+        logger.error(f"Docker-compose failed: {e.stderr}")
         return False
     except Exception as e:
-        logger.error(f"❌ Deployment error: {str(e)}")
+        logger.error(f"Deployment error: {str(e)}")
         return False
 
 def wait_for_health(timeout=60):
