@@ -66,13 +66,13 @@ expected output </br>
 
 Test the application </br>
 --------------------
-5. Run the test_api.bat in the project folder, to test directly
+5. Run the test_api.bat located in the project folder, to test directly
    
 6. Alternatively Test the application via postman as given in the below steps
 
 
 	
-way 3: For manual deployment in docker desktop
+way 2: For manual deployment in docker desktop
 ----------------------
 1. Launch docker.Ensure Docker Desktop is running if you're on Windows.  
 
