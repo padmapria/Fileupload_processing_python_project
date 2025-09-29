@@ -49,8 +49,9 @@ jobs:
       # 4. DOCKER HUB DEPLOYMENT (Only on master branch) and shutdown docker compose
       - name: push image to docker hub
         run: |
-          docker login -u deepika3deepika3 -p ${{ secrets.DOCKER_HUB_TOKEN }}
-          docker push padmapria/fileupload_processing_python_project-file-processor:latest
+          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_HUB_TOKEN }}
+          docker tag fileupload_processing_python_project-file-processor ${{ secrets.DOCKER_USERNAME }}/file-processor:latest
+          docker push ${{ secrets.DOCKER_USERNAME }}/file-processor:latest
 
       - name: Cleanup
         run: docker compose down
@@ -59,5 +60,5 @@ jobs:
       - name: Log success
         run: | 
           echo "CI/CD Pipeline Completed Successfully!!"
-          echo "Image pushed to: ${{ secrets.DOCKER_HUB_TOKEN }}/fileupload_processing_python_project-file-processor:latest"
+          echo "Image pushed to: ${{ secrets.DOCKER_USERNAME }}/file-processor:latest"
 
