@@ -1,7 +1,7 @@
 ## Goal of the project
-# File Processing Service
+# File Processing Service with CI/CD pipeline
 
-A Flask-based REST API for uploading, processing, and storing  processing results (line count, word count) in memory of text and CSV files. The service counts lines and words in uploaded files and provides a in-memory storage solution for the analysis results.
+A Flask-based REST API for uploading, processing, and storing  processing results (line count, word count) in memory of text and CSV files. The service automatically counts lines and words in uploaded files and stores the processing results in an in-memory database with comprehensive logging and error handling.
 
 ### Processing results stored in memory
 <img width="607" height="239" alt="image" src="https://github.com/user-attachments/assets/6fc77799-9cb2-4194-97c9-9ae971d5ace6" />
@@ -21,9 +21,10 @@ Retrieve → User can fetch processing results using record ID
 - **Data Storage**: In-memory storage with unique record IDs
 - **Comprehensive Logging**: Structured logging with class names and timestamps
 - **Error Handling**: Graceful exception handling with user-friendly messages
-- **Docker Support**: Containerized deployment with Docker
 - **Health Checks**: API health monitoring endpoint
 - **RESTful API**: Clean API design with proper HTTP status codes
+- **Docker Support**: Containerized deployment with Docker
+- **CICD Configured**: github actions/dockerhub
 
 ## 🛠️ Tech Stack
 
@@ -31,7 +32,8 @@ Retrieve → User can fetch processing results using record ID
 - **File Processing**: Custom line/word counting logic
 - **Logging**: Python logging with custom formatters
 - **Containerization**: Docker, Docker Compose
-- **Testing**: unittest, pytest     
+- **Testing**: unittest, pytest
+- **CI/CD**: github actions/dockerhub
 
 
 
@@ -147,21 +149,21 @@ docker ps
 docker stop <container_id>
 docker system prune -a
 
-### Deployment with github actions CI/CD
+### Deployment with github actions & Dockerhub CI/CD
 -----------------------------------------
 I have created a workflow located at the folder .github/workflows that triggers following actions one by one   
 
-1. Code Setup and Environment Configuration:   
+1. Code Setup and Configuration:   
 The workflow triggers on push or pull request events to the master branch.   
 It runs on an Ubuntu environment and sets up Python 3.9 for execution.   
 Dependencies are installed using pip based on the requirements.txt file.   
  
 2. Testing and Docker Deployment:   
 Unit and integration tests are run using the run_tests.py script to ensure code correctness.   
-If tests pass, the application is deployed into a Docker container.   
+Docker container is started and application is deployment.   
 
 3. Docker Container Execution:   
-Once the docker is up, we can push for deployment
+Once the application is up in docker, the image is pushed to dockerhub for deployment
 <img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/61e65e68-9e94-4b08-b544-b1c014e5f710" />
 
 
@@ -170,7 +172,7 @@ Once the docker is up, we can push for deployment
 1) To include Iaac like Terraform to deploy in AWS.
 
 Our application has Memory-only storage - suitable for temporary processing needs  <br/>
-2) Files are NOT stored - only processing results are kept in memory, we can configure db and store in db    <br/>
+2) Files are NOT stored - only processing results are kept in memory, we can configure db and store results in db    <br/>
 3) Data is ephemeral - all results lost on application restart    <br/>
 4) No file persistence - original files are processed and discarded   <br/>
 
