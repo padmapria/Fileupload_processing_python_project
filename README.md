@@ -31,10 +31,14 @@ Retrieve → User can fetch processing results using record ID
 - **File Processing**: Custom line/word counting logic
 - **Logging**: Python logging with custom formatters
 - **Containerization**: Docker, Docker Compose
-- **Testing**: unittest, pytest
+- **Testing**: unittest, pytest     
+
+
 
 ## 📁 Project Structure
 <img width="650" height="500" alt="image" src="https://github.com/user-attachments/assets/1084e8a6-1e7e-4b52-abcb-fdc3da41f4b4" />
+<br/>
+Project used as reference: https://github.com/padmapria/customerchurn_prediction_mlops_project
 
 
 ### How to run the project in Windows Machine or AWS EC2 that have python 3.11, docker and github installed
@@ -72,7 +76,7 @@ Test the application </br>
 
 
 	
-way 2: For manual deployment in docker desktop
+way 2: For deployment on docker desktop in local machine
 ----------------------
 1. Launch docker.Ensure Docker Desktop is running if you're on Windows.  
 
