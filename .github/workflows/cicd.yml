@@ -13,6 +13,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    # 1. CODE SETUP AND CONFIGURATION
       - name: Checkout code
         uses: actions/checkout@v4
         
@@ -31,10 +32,12 @@ jobs:
           sudo curl -L "https://github.com/docker/compose/releases/latest/download/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
           sudo chmod +x /usr/local/bin/docker-compose
           
+      # 2. TESTING
       - name: Run unit tests
         run: |
           python run_tests.py
-        
+
+      # 3. DOCKER BUILD AND TEST
       - name: Start Docker container
         run: |
           docker-compose up -d --build
@@ -46,11 +49,15 @@ jobs:
       - name: Cleanup
         run: docker compose down
 
+      # 4. DOCKER HUB DEPLOYMENT (Only on master branch)
       - name: push image to docker hub
         run: |
           docker login -u deepika3deepika3 -p ${{ secrets.DOCKER_HUB_TOKEN }}
           docker push padmapria/Fileupload_processing_python_project:latest
-    
+
+      # 5. DEPLOYMENT NOTIFICATION
       - name: Log success
-        run: echo "All tests passed and Docker Compose deployment successful!"
+        run: | 
+          echo "CI/CD Pipeline Completed Successfully!!"
+          echo "Image pushed to: ${{ secrets.DOCKER_HUB_TOKEN }}/Fileupload_processing_python_project:latest"
 
