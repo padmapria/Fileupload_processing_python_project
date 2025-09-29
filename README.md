@@ -7,11 +7,11 @@ A Flask-based REST API for uploading, processing, and storing  processing result
 <img width="607" height="239" alt="image" src="https://github.com/user-attachments/assets/6fc77799-9cb2-4194-97c9-9ae971d5ace6" />
 
 ## Data Flow
-Upload → User uploads .txt/.csv file
-Process → System counts lines and words
-Store Results → Only analysis results stored in memory
-Return → User gets record ID for retrieving results
-Retrieve → User can fetch processing results using record ID
+- **Upload → User uploads .txt/.csv file**
+- **Process → System counts lines and words**
+- **Store Results → Only analysis results stored in memory**
+- **Return → User gets record ID for retrieving results**
+- **Retrieve → User can fetch processing results using record ID**
 
 ## 🚀 Features
 
@@ -160,11 +160,12 @@ Dependencies are installed using pip based on the requirements.txt file.
  
 2. Testing and Docker Deployment:   
 Unit and integration tests are run using the run_tests.py script to ensure code correctness.   
-Docker container is started and application is deployment.   
+Docker container is started and application is deployed in docker.   
 
 3. Docker Container Execution:   
 Once the application is up in docker, the image is pushed to dockerhub for deployment
-<img width="500" height="500" alt="image" src="https://github.com/user-attachments/assets/61e65e68-9e94-4b08-b544-b1c014e5f710" />
+<img width="700" height="700" alt="image" src="https://github.com/user-attachments/assets/30807f3b-41c4-4905-ba0d-12f208b43ca9" />
+
 
 
 ### Things to improve in the project
