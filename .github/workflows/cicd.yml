@@ -38,9 +38,18 @@ jobs:
       - name: Start Docker container
         run: |
           docker-compose up -d --build
-    
+          
+      - name: Check Docker status and test
+        run: |
+          docker-compose ps
+          
       - name: Cleanup
         run: docker compose down
+
+      - name: push image to docker hub
+        run: |
+          docker login -u deepika3deepika3 -p ${{ secrets.DOCKER_HUB_TOKEN }}
+          docker push padmapria/Fileupload_processing_python_project:latest
     
       - name: Log success
         run: echo "All tests passed and Docker Compose deployment successful!"
