@@ -1,5 +1,5 @@
-## Goal of the project
-# File Processing Service with CI/CD pipeline
+
+## File Processing Service with CI/CD pipeline
 
 A Flask-based REST API for uploading, processing, and storing  processing results (line count, word count) in memory of text and CSV files. The service automatically counts lines and words in uploaded files and stores the processing results in an in-memory database with comprehensive logging and error handling.
 
